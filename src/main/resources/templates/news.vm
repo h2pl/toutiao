@@ -1,0 +1,52 @@
+<html>
+<body>
+hello vm
+
+## 注释
+
+#*
+这里都是注释
+*#
+
+key:$!{key}
+key:${key1}
+key:$!{key2}
+## 取值不存在的时候就不显示了
+<br>
+
+#foreach ($color in $colors)
+    Color $!{foreach.index}/$!{foreach.count}:$!{color}
+    <br>
+#end
+
+<br>
+
+#foreach ($key in $map.keySet())
+    map $!{foreach.index}/$!{foreach.count}:$!{key} $!{map.get($key)}
+    <br>
+#end
+
+<br>
+
+User:$!{user.name}
+User:${user.id}
+
+#set($title = "nowcoder")
+<br>
+Include: #include("header.vm")
+##只包含文本，不解析
+#parse("header.vm")
+##先编译，再导入，可以修改变量。
+
+##绘制一个模块的方法
+#macro (render_color $color, $index)
+    Color by macro $index $color
+    <br>
+#end
+
+<br>
+#foreach ($color in $colors)
+    #render_color($color, $foreach.index)
+#end
+</body>
+</html>
