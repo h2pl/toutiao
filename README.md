@@ -19,7 +19,7 @@ JavaWeb项目测试和部署，课程总结回顾
 
 [2基本框架开发](#基本框架开发)
 
-
+[3数据库配置和首页的创建](#数据库配置和首页的创建)
 
 
 
@@ -46,14 +46,47 @@ JavaWeb项目测试和部署，课程总结回顾
     
     使用重定向的redirectview和统一异常处理器exceptionhandler
     
-    
 AOP和IOC
 
     IOC解决对象实例化以及依赖传递问题，解耦。
+    
     AOP解决纵向切面问题，主要实现日志和权限控制功能。
     
     aspect实现切面，并且使用logger来记录日志，用该切面的切面方法来监听controller。
+
+## 数据库配置和首页的创建
+
+    使用mysql创建数据库和表，建议自己写一下sql到mysql命令行跑一下。
     
+    加入mybatis和mysql的maven仓库，注意，由于现在版本的springboot不再支持velocity进而导致我使用较早版本的springboot，所以这里提供一可以正常运行的版本设置。
+
+    springboot使用1.4.0
+
+    mybatis-spring-boot-starter使用1.2.1
+
+    mysql-connector-java使用5.1.6
+
+    亲测可用。
+    
+    接下来写controller，dao和service。注意mybatis的注解语法以及xml的配置要求，xml要求放在resource中并且与dao接口在相同的包路径下。
+    
+    application.properties增加spring配置数据库链接地址
+    
+    两个小工具：
+    ViewObject:方便传递任何数据到
+    VelocityDateTool:velocity自带工具类
+    
+    写好静态文件html css和js。并且注意需要配置
+    spring.velocity.suffix=.html 保证跳转请求转发到html上
+    spring.velocity.toolbox-config-location=toolbox.xml
+    
+    至此主页基本完成，具体业务逻辑请参考代码。
+   
+    
+    
+    
+
+
 <html>
 <!--在这里插入内容-->
 </html>
