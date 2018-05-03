@@ -1,52 +1,55 @@
 <html>
 <body>
-hello vm
+<pre>
+Hello VM.
 
-## 注释
+## 你看不到我
 
 #*
-这里都是注释
+这里都看不到
 *#
 
-key:$!{key}
-key:${key1}
-key:$!{key2}
-## 取值不存在的时候就不显示了
-<br>
+value1:$!{value1}
+$!{value2}
+${value3}
 
 #foreach ($color in $colors)
-    Color $!{foreach.index}/$!{foreach.count}:$!{color}
-    <br>
+Color $!{foreach.index}/$!{foreach.count}: $!{color}
 #end
 
-<br>
-
-#foreach ($key in $map.keySet())
-    map $!{foreach.index}/$!{foreach.count}:$!{key} $!{map.get($key)}
-    <br>
+#foreach($key in $map.keySet())
+Number $!{foreach.index}/$!{foreach.count}: $!{key} $map.get($key)
 #end
 
-<br>
+#foreach($kv in $map.entrySet())
+Number $!{foreach.index}/$!{foreach.count}: $!{kv.key} $!{kv.value}
+#end
+
 
 User:$!{user.name}
-User:${user.id}
+User:$!{user.getName()}
 
 #set($title = "nowcoder")
-<br>
-Include: #include("header.vm")
-##只包含文本，不解析
-#parse("header.vm")
-##先编译，再导入，可以修改变量。
+Include: #include("header.vm") <br>
+Parse:#parse("header.vm")
 
-##绘制一个模块的方法
-#macro (render_color $color, $index)
-    Color by macro $index $color
-    <br>
+#macro (render_color, $color, $index)
+Color By Macro $index, $color
 #end
 
-<br>
 #foreach ($color in $colors)
     #render_color($color, $foreach.index)
 #end
+
+#set($hello = "hello")
+#set($hworld1 = "$!{hello} world")
+#set($hworld2 = '$!{hello} world')
+
+hworld1:$hworld1
+hworld2:$hworld2
+
+$!{colors.size()}
+
+</pre>
 </body>
 </html>

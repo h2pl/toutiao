@@ -1,3 +1,1 @@
-<html>
-Title <h>${title}</h>
-</html>
+Title <h>$!title<h>

@@ -20,7 +20,7 @@ import java.util.*;
 /**
  * Created by 周杰伦 on 2018/5/2.
  */
-@Controller
+//@Controller
 public class IndexController {
     private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
