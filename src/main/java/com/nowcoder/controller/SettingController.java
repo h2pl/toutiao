@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Created by 周杰伦 on 2018/5/2.
+ * Created by nowcoder on 2016/6/26.
  */
 @Controller
 public class SettingController {
-    @RequestMapping("setting")
+    @RequestMapping("/setting")
     @ResponseBody
     public String setting() {
-        return "hello";
+        return "Setting:OK";
     }
 }
