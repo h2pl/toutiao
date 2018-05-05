@@ -5721,7 +5721,7 @@ header.navbar .navbar-brand {
   margin-left: 5px;
   margin-top: 5px;
   padding: 5px 5px 5px 60px;
-  background: url(/assets/logo-cf19f42eba7cd98c38a46a158aef1cd5.png) no-repeat 0 4px;
+  /*background: url(/assets/logo-cf19f42eba7cd98c38a46a158aef1cd5.png) no-repeat 0 4px;*/
   background-size: 46px 46px;
   text-decoration: none;
   color: #FFF;
@@ -7166,6 +7166,6 @@ textarea[readonly] {
 }
 .btn-upload {
     margin-top: 47px;
-    margin-left: 10px;
+    margin-left: 0;
 }
 /* popup-wrap end */

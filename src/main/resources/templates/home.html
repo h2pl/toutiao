@@ -1,50 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>头条资讯 - 牛客网</title>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <meta name="keywords" content="读《Web 全栈工程师的自我修养》">
-    <meta name="description" content="阅读影浅分享的读《Web 全栈工程师的自我修养》，就在牛客网。">
-
-    <link rel="stylesheet" type="text/css" href="/styles/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/styles/font-awesome.min.css">
-
-    <link rel="stylesheet" media="all" href="/styles/style.css">
-
-</head>
-<body class="welcome_index">
-
-    <header class="navbar navbar-default navbar-static-top bs-docs-nav" id="top" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
-
-                <a href="http://nowcoder.com/" class="navbar-brand logo">
-                  <h1>头条资讯</h1>
-                  <h3>你关心的才是头条</h3>
-                </a>
-            </div>
-
-            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li class=""><a href="http://nowcoder.com/explore">发现</a></li>
-
-                    #if ($user)
-                    <li class="js-login"><a href="javascript:void(0);">$!{user.name}</a></li>
-                    #else
-                    <li class="js-login"><a href="javascript:void(0);">登陆</a></li>
-                    #end
-                </ul>
-
-            </nav>
-        </div>
-    </header>
+#parse("header.html")
 
     <div id="main">
     <!--
@@ -128,13 +82,13 @@
                                 <button class="click-dislike down" aria-pressed="true" title="反对"><i class="vote-arrow"></i>
                                 </button>
                             </div>
-                            <div class="content" data-url="http://nowcoder.com/posts/5l3hjr">
+                            <div class="content" data-url="/news/$!{news.id}">
                                 <div >
                                     <img class="content-img" src="$!{vo.news.image}" alt="">
                                 </div>
                                 <div class="content-main">
                                     <h3 class="title">
-                                        <a target="_blank" rel="external nofollow" href="$!{vo.news.link}">$!{vo.news.title}</a>
+                                        <a target="_blank" rel="external nofollow" href="/news/$!{vo.news.id}">$!{vo.news.title}</a>
                                     </h3>
                                     <div class="meta">
                                         $!{vo.news.link}
@@ -182,55 +136,11 @@
 
     </div>
 
-    <footer>
-        <div class="container">
-            <p class="text-center">
-                <a href="http://nowcoder.com/about">关于我们</a>
-                <a href="http://nowcoder.com/download">头条客户端</a>
-            </p>
-            <p class="text-center">© 2013-2016 头条八卦</p>
-        </div>
 
-    </footer>
+#if ($pop)
+<script>
+window.loginpop = $!{pop};
+</script>
+#end
 
-  <div id="quick-download">
-        <button type="button" class="close-link btn-link" data-toggle="modal" data-target="#quick-download-app-modal"><i class="fa icon-times-circle"></i></button>
-
-    <a class="download-link" href="http://nowcoder.com/download">
-      <h3>牛客网</h3>
-      <h4>程序员的首选学习分享平台</h4>
-      <button type="button" class="btn btn-info btn-sm">下载 APP</button>
-    </a>
-
-    <div class="modal fade" id="quick-download-app-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">提示</div>
-          <div class="modal-body">
-            <div class="checkbox">
-              <label class="i-checks">
-                <input id="already-installed" type="checkbox"><i></i> 我已安装了牛客网App，不再显示
-              </label>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-block btn-default" id="close-quick-download-app-modal">关 闭</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-    <script>window.loginpop = $!{pop};</script>
-    <script type="text/javascript" src="/scripts/jquery.js"></script>
-    <script type="text/javascript" src="/scripts/main/base/base.js"></script>
-    <script type="text/javascript" src="/scripts/main/base/util.js"></script>
-    <script type="text/javascript" src="/scripts/main/base/event.js"></script>
-    <script type="text/javascript" src="/scripts/main/component/component.js"></script>
-    <script type="text/javascript" src="/scripts/main/component/popup.js"></script>
-    <script type="text/javascript" src="/scripts/main/component/popupLogin.js"></script>
-    <script type="text/javascript" src="/scripts/main/site/home.js"></script>
-
-
-</body></html>
+#parse("footer.html")

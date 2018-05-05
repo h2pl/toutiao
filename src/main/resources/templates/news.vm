@@ -33,7 +33,7 @@ User:$!{user.getName()}
 Include: #include("header.vm") <br>
 Parse:#parse("header.vm")
 
-#macro (render_color, $color, $index)
+#macro (render_color $color, $index)
 Color By Macro $index, $color
 #end
 

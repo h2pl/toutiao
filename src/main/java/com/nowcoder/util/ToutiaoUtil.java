@@ -13,6 +13,9 @@ import java.util.Map;
  */
 public class ToutiaoUtil {
     private static final Logger logger = LoggerFactory.getLogger(ToutiaoUtil.class);
+    public static final String IMAGE_DIR = "D:/toutiao/upload/";
+    public static final String[] IMAGE_FILE_EXT = {"png", "jpg", "jpeg", "bmp"};
+    public static String TOUTIAO_DOMAIN = "http://127.0.0.1:8080/";
 
     public static String getJSONString(int code) {
         JSONObject json = new JSONObject();
@@ -62,5 +65,14 @@ public class ToutiaoUtil {
             logger.error("生成MD5失败", e);
             return null;
         }
+    }
+
+    public static boolean isFileAllowed(String fileExt) {
+        for (String ext : IMAGE_FILE_EXT) {
+            if (fileExt.equals(ext)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
