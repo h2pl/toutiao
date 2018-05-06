@@ -1,49 +1,68 @@
 package com.nowcoder.service;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSONObject;
+import com.nowcoder.util.ToutiaoUtil;
 import com.qiniu.common.QiniuException;
-import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
-import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.UUID;
 
 /**
- * Created by 周杰伦 on 2018/5/5.
+ * Created by nowcoder on 2016/7/7.
  */
 @Service
 public class QiniuService {
-    public void upload() {
-        //构造一个带指定Zone对象的配置类
-        Configuration cfg = new Configuration(Zone.zone0());
-//...其他参数参考类注释
-        UploadManager uploadManager = new UploadManager(cfg);
-//...生成上传凭证，然后准备上传
-        String accessKey = "your access key";
-        String secretKey = "your secret key";
-        String bucket = "your bucket name";
-//如果是Windows情况下，格式是 D:\\qiniu\\test.png
-        String localFilePath = "/home/qiniu/test.png";
-//默认不指定key的情况下，以文件内容的hash值作为文件名
-        String key = null;
-        Auth auth = Auth.create(accessKey, secretKey);
-        String upToken = auth.uploadToken(bucket);
+    private static final Logger logger = LoggerFactory.getLogger(QiniuService.class);
+    //设置好账号的ACCESS_KEY和SECRET_KEY
+    String ACCESS_KEY = "DEYWFFCReQqVMYESzB4qo9WYwYtxmVf-8DHU34Jr";
+    String SECRET_KEY = "5bFWFSYb9Gyx5v-5wYnket58cashXLw2-aZ6D3g2";
+    //要上传的空间
+    String bucketname = "toutiao";
+
+    //密钥配置
+    Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+    //创建上传对象
+    UploadManager uploadManager = new UploadManager();
+
+    private static String QINIU_IMAGE_DOMAIN = "http://p8aa1ssg4.bkt.clouddn.com/";
+
+    //简单上传，使用默认策略，只需要设置上传的空间名就可以了
+    public String getUpToken() {
+        return auth.uploadToken(bucketname);
+    }
+
+    public String saveImage(MultipartFile file) throws IOException {
         try {
-            Response response = uploadManager.put(localFilePath, key, upToken);
-            //解析上传成功的结果
-            DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            System.out.println(putRet.key);
-            System.out.println(putRet.hash);
-        } catch (QiniuException ex) {
-            Response r = ex.response;
-            System.err.println(r.toString());
-            try {
-                System.err.println(r.bodyString());
-            } catch (QiniuException ex2) {
-                //ignore
+            int dotPos = file.getOriginalFilename().lastIndexOf(".");
+            if (dotPos < 0) {
+                return null;
             }
+            String fileExt = file.getOriginalFilename().substring(dotPos + 1).toLowerCase();
+            if (!ToutiaoUtil.isFileAllowed(fileExt)) {
+                return null;
+            }
+
+            String fileName = UUID.randomUUID().toString().replaceAll("-", "") + "." + fileExt;
+            //调用put方法上传
+            Response res = uploadManager.put(file.getBytes(), fileName, getUpToken());
+            //打印返回的信息
+            if (res.isOK() && res.isJson()) {
+                return QINIU_IMAGE_DOMAIN + JSONObject.parseObject(res.bodyString()).get("key");
+            } else {
+                logger.error("七牛异常:" + res.bodyString());
+                return null;
+            }
+        } catch (QiniuException e) {
+            // 请求失败时打印的异常的信息
+            logger.error("七牛异常:" + e.getMessage());
+            return null;
         }
     }
 }
