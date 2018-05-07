@@ -6,13 +6,11 @@
                 <li id="conversation-item-10005_622873">
                     <a class="letter-link" href="/msg/detail?conversationId=$!{conversation.conversation.conversationId}"></a>
                     <div class="letter-info">
-                        <span class="l-time">$date.format('yyyy-MM-dd HH:mm:ss', $!{conversation.conversation.createdDate})</span>
+                        <span class="l-time">$!date.format('yyyy-MM-dd HH:mm:ss', $!{conversation.conversation.createdDate})</span>
                         <div class="l-operate-bar">
-                            <!--
-                            <a href="javascript:void(0);" class="sns-action-del" data-id="">
+                            <a href="javascript:void(0);" class="sns-action-del" data-id="10005_622873">
                             删除
                             </a>
-                            -->
                             <a href="/msg/detail?conversationId=$!{conversation.conversation.conversationId}">
                                 共$!{conversation.conversation.id}条会话
                             </a>
@@ -20,15 +18,15 @@
                     </div>
                     <div class="chat-headbox">
                         <span class="msg-num">
-                            $!{conversation.unreadCount}
+                            $!{conversation.unread}
                         </span>
-                        <a class="list-head" href="/user/$!{conversation.userId}">
-                            <img alt="头像" src="$!{conversation.headUrl}">
+                        <a class="list-head" href="/user/$!{conversation.user.id}">
+                            <img alt="头像" src="$!{conversation.user.headUrl}">
                         </a>
                     </div>
                     <div class="letter-detail">
-                        <a title="$!{conversation.userName}" class="letter-name level-color-1">
-                            $!{conversation.userName}
+                        <a title="$!{conversation.user.name}" class="letter-name level-color-1">
+                            $!{conversation.user.name}
                         </a>
                         <p class="letter-brief">
                             <a href="/msg/detail?conversationId=$!{conversation.conversation.conversationId}">

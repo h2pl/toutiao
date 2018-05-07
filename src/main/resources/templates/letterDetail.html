@@ -4,24 +4,24 @@
             <ul class="letter-chatlist">
                 #foreach($msg in $messages)
                 <li id="msg-item-4009580">
-                    <a class="list-head">
-                        <img alt="头像" src="$!{msg.headUrl}">
-                    </a>
-                    <div class="tooltip fade right in">
-                        <div class="tooltip-arrow"></div>
-                        <div class="tooltip-inner letter-chat clearfix">
-                            <div class="letter-info">
-                                <p class="letter-time">$date.format('yyyy-MM-dd HH:mm:ss', $!{msg.message.createdDate})</p>
-                                <a href="javascript:void(0);" id="del-link" name="4009580">删除</a>
-                            </div>
-                            <p class="chat-content">
-                                $!{msg.message.content}
-                            </p>
-                        </div>
-                    </div>
-                </li>
+            <a class="list-head" href="/user/$!{msg.userId}">
+            <img alt="头像" src="$!{msg.headUrl}">
+            </a>
+            <div class="tooltip fade right in">
+            <div class="tooltip-arrow"></div>
+            <div class="tooltip-inner letter-chat clearfix">
+            <div class="letter-info">
+            <p class="letter-time">$date.format('yyyy-MM-dd HH:mm:ss', $!{msg.message.createdDate})</p>
+            <a href="javascript:void(0);" id="del-link" name="4009580">删除</a>
+            </div>
+            <p class="chat-content">
+                $!{msg.message.content}
+            </p>
+            </div>
+            </div>
+            </li>
                 #end
-</ul>
+            </ul>
 
         </div>
         <script type="text/javascript">

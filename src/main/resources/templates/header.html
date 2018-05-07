@@ -20,7 +20,7 @@
     <script type="text/javascript" src="/scripts/main/component/popupLogin.js"></script>
     <script type="text/javascript" src="/scripts/main/component/upload.js"></script>
     <script type="text/javascript" src="/scripts/main/component/popupUpload.js"></script>
-    <script type="text/javascript" src="/scripts/main/site/home.js"></script>
+    <script type="text/javascript" src="/scripts/main/util/action.js"></script>
 
 </head>
 <body class="welcome_index">
