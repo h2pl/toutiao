@@ -45,26 +45,32 @@ public class NewsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LikeService likeService;
+
     @RequestMapping(path = {"/news/{newsId}"}, method = {RequestMethod.GET})
     public String newsDetail(@PathVariable("newsId") int newsId, Model model) {
-        try {
-            News news = newsService.getById(newsId);
-            if (news != null) {
-                List<Comment> comments = commentService.getCommentsByEntity(news.getId(), EntityType.ENTITY_NEWS);
-                List<ViewObject> commentVOs = new ArrayList<ViewObject>();
-                for (Comment comment : comments) {
-                    ViewObject commentVO = new ViewObject();
-                    commentVO.set("comment", comment);
-                    commentVO.set("user", userService.getUser(comment.getUserId()));
-                    commentVOs.add(commentVO);
-                }
-                model.addAttribute("comments", commentVOs);
+        News news = newsService.getById(newsId);
+        if (news != null) {
+            int localUserId = hostHolder.getUser() != null ? hostHolder.getUser().getId() : 0;
+            if (localUserId != 0) {
+                model.addAttribute("like", likeService.getLikeStatus(localUserId, EntityType.ENTITY_NEWS, news.getId()));
+            } else {
+                model.addAttribute("like", 0);
             }
-            model.addAttribute("news", news);
-            model.addAttribute("owner", userService.getUser(news.getUserId()));
-        } catch (Exception e) {
-            logger.error("获取资讯明细错误" + e.getMessage());
+            // 评论
+            List<Comment> comments = commentService.getCommentsByEntity(news.getId(), EntityType.ENTITY_NEWS);
+            List<ViewObject> commentVOs = new ArrayList<ViewObject>();
+            for (Comment comment : comments) {
+                ViewObject vo = new ViewObject();
+                vo.set("comment", comment);
+                vo.set("user", userService.getUser(comment.getUserId()));
+                commentVOs.add(vo);
+            }
+            model.addAttribute("comments", commentVOs);
         }
+        model.addAttribute("news", news);
+        model.addAttribute("owner", userService.getUser(news.getUserId()));
         return "detail";
     }
 
