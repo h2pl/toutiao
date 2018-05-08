@@ -1,5 +1,8 @@
 package com.nowcoder.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Created by nowcoder on 2016/7/13.
  */

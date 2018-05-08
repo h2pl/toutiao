@@ -1,5 +1,8 @@
 package com.nowcoder.controller;
 
+import com.nowcoder.async.EventModel;
+import com.nowcoder.async.EventProducer;
+import com.nowcoder.async.EventType;
 import com.nowcoder.model.News;
 import com.nowcoder.model.ViewObject;
 import com.nowcoder.service.NewsService;
@@ -26,7 +29,10 @@ public class LoginController {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     @RequestMapping(path = {"/reg/"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
@@ -69,14 +75,16 @@ public class LoginController {
                     cookie.setMaxAge(3600*24*5);
                 }
                 response.addCookie(cookie);
-                return ToutiaoUtil.getJSONString(0, "注册成功");
+                eventProducer.fireEvent(new EventModel(EventType.LOGIN)
+                        .set("username", username).set("email", "362294931@qq.com"));
+                return ToutiaoUtil.getJSONString(0, "登录成功");
             } else {
                 return ToutiaoUtil.getJSONString(1, map);
             }
 
         } catch (Exception e) {
-            logger.error("注册异常" + e.getMessage());
-            return ToutiaoUtil.getJSONString(1, "注册异常");
+            logger.error("登录异常功" + e.getMessage());
+            return ToutiaoUtil.getJSONString(1, "登录异常");
         }
     }
 
