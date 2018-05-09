@@ -6,7 +6,7 @@
 	<groupId>com.nowcoder</groupId>
 	<artifactId>toutiao</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>toutiao</name>
 	<description>Demo project for Spring Boot</description>
