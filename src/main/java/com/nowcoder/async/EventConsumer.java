@@ -53,6 +53,7 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware{
             }
         }
 
+        //todo: java开发规范：不要单独创建线程，最好使用线程池管理线程
         //根据前面的map可以知道取出的时间由谁来处理
         Thread thread = new Thread(new Runnable() {
             @Override
