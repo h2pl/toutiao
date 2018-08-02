@@ -12,6 +12,12 @@ import java.util.List;
 /**
  * Created by nowcoder on 2016/7/7.
  */
+
+//todo: 这个点赞发信息功能有问题
+
+// 数据流程是: 点赞 => 点赞信息发送到redis消息队列的生产者进程，同时消费者不断取出来消息进行消费，也就是给被点赞者发信息
+
+
 @Service
 public class MessageService {
     @Autowired

@@ -25,6 +25,7 @@ public class EventProducer {
             String key = RedisKeyUtil.getEventQueueKey();
             jedisAdapter.lpush(key, json);
 //        jedisAdapter.setObject(eventModel);
+            logger.info("将事件放入消息队列");
             return true;
         }catch (Exception e) {
             logger.error("事件放入队列失败" + e.getMessage());

@@ -5,6 +5,8 @@ import com.nowcoder.dao.UserDAO;
 import com.nowcoder.model.HostHolder;
 import com.nowcoder.model.LoginTicket;
 import com.nowcoder.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,8 +26,11 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
     @Autowired
     private HostHolder hostHolder;
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginRequiredInterceptor.class);
+
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+        logger.info("拦截器：用户无权登陆 ");
         //这个拦截器可以让没有登陆的用户无法访问某些页面、
         if (hostHolder.getUser() == null) {
             httpServletResponse.sendRedirect("/?pop=1");

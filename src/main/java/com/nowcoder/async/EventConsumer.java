@@ -58,9 +58,11 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware{
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                logger.info("监听事件的线程");
                 while (true) {
                     String key = RedisKeyUtil.getEventQueueKey();
                     List<String> events = jedisAdapter.brpop(0, key);
+                    logger.info("从消息队列取出事件");
                     for (String msg : events) {
                         //redis自带消息key要过滤掉
                         if (msg.equals(key)) {
@@ -73,6 +75,7 @@ public class EventConsumer implements InitializingBean,ApplicationContextAware{
                         }
                         for (EventHandler eventHandler : config.get(eventModel.getEventType())) {
                             eventHandler.doHandle(eventModel);
+                            logger.info("从消息队列消费消息");
                         }
                     }
                 }
