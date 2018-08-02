@@ -5,6 +5,8 @@ import com.nowcoder.dao.UserDAO;
 import com.nowcoder.model.HostHolder;
 import com.nowcoder.model.LoginTicket;
 import com.nowcoder.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -29,9 +31,12 @@ public class PassportInterceptor implements HandlerInterceptor{
     @Autowired
     private HostHolder hostHolder;
 
+    private static final Logger logger = LoggerFactory.getLogger(PassportInterceptor.class);
+
     //true继续请求，false拒绝请求
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+        logger.info("拦截器：判断用户登陆信息");
         //处理用户信息，判断是否有ticket,一个用户一个ticket，但是有时限
         String ticket = null;
         if (httpServletRequest.getCookies() != null) {
